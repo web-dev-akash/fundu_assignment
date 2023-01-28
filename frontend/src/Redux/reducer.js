@@ -1,44 +1,44 @@
-import { GET_ERROR, GET_LOADING, GET_TOKEN, GET_USER } from "./actionTypes";
+import {
+  GET_ERROR,
+  GET_LOADING,
+  GET_TOKEN,
+  GET_USER,
+  GET_USERS,
+} from "./actionTypes";
 
 const initialState = {
-  user: [],
+  user: {},
   loading: false,
   error: false,
-  token: "",
+  users: [],
 };
 
 export const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case GET_USER: {
+    case GET_USERS: {
       return {
-        user: payload,
+        ...state,
+        users: payload,
         loading: false,
         error: false,
-        token: null,
       };
     }
     case GET_LOADING: {
       return {
-        user: {},
+        ...state,
         loading: true,
-        error: false,
-        token: null,
       };
     }
     case GET_ERROR: {
       return {
-        user: {},
-        loading: false,
+        ...state,
         error: true,
-        token: null,
       };
     }
-    case GET_TOKEN: {
+    case GET_USER: {
       return {
-        user: {},
-        loading: false,
-        error: false,
-        token: payload,
+        ...state,
+        user: payload,
       };
     }
     default:

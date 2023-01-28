@@ -40,7 +40,7 @@ app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.find({ email: email, password: password });
   try {
-    if (user) {
+    if (user.length > 0) {
       res.status(200).send({
         message: "Login Successful",
         data: user,
