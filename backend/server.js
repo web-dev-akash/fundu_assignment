@@ -22,8 +22,8 @@ app.get("/", async (req, res) => {
   }
 });
 app.post("/signup", async (req, res) => {
-  const { email, password } = req.body;
-  const body = new User({ email, password });
+  const { email, password, name } = req.body;
+  const body = new User({ email, password, name });
   await body.save();
   try {
     res.status(200).send({
@@ -39,7 +39,6 @@ app.post("/signup", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.find({ email: email, password: password });
-
   try {
     if (user) {
       res.status(200).send({

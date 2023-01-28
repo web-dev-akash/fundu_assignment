@@ -1,4 +1,4 @@
-import { GET_ERROR, GET_LOADING, GET_USER } from "./actionTypes";
+import { GET_ERROR, GET_LOADING, GET_TOKEN, GET_USER } from "./actionTypes";
 
 export const getUser = (payload) => ({
   type: GET_USER,
@@ -11,10 +11,14 @@ export const getLoading = () => ({
 export const getError = () => ({
   type: GET_ERROR,
 });
+export const getToken = (payload) => ({
+  type: GET_TOKEN,
+  payload,
+});
 
 export const fetchUser = async () => {
   try {
-    const res = await fetch(``);
+    const res = await fetch(`https://fundu-api-u8jr.onrender.com`);
     return await res.json();
   } catch (error) {
     console.log(error);

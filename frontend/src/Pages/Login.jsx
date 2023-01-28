@@ -3,12 +3,13 @@ import { Formik, Form, Field } from "formik";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { useJwt } from "react-jwt";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getToken } from "../Redux/action";
+
 export const Login = () => {
   const client_id = process.env.REACT_APP_CLIENT_ID;
-  const [token, setToken] = useState("");
-  const { decodedToken, isExpired } = useJwt(token);
   const navigate = useNavigate();
-  console.log(decodedToken);
+  const dispatch = useDispatch();
   return (
     <GoogleOAuthProvider clientId={client_id}>
       <Formik
@@ -23,7 +24,7 @@ export const Login = () => {
             <Field type="password" name="password" placeholder="Password" />
             <GoogleLogin
               onSuccess={(credentialResponse) => {
-                setToken(credentialResponse.credential);
+                dispatch(getToken(credentialResponse.credential));
                 navigate("/home");
               }}
             />
