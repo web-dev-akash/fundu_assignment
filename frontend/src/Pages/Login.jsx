@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { getError, getLoading } from "../Redux/action";
 const client_id = process.env.REACT_APP_CLIENT_ID;
 
 export const Login = () => {
   const navigate = useNavigate();
-  const state = useSelector((state) => state);
-  const { loading, error } = state;
   const [data, setData] = useState({
     email: "",
     password: "",
