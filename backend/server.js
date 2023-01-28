@@ -21,6 +21,43 @@ app.get("/", async (req, res) => {
     console.log(error);
   }
 });
+app.post("/signup", async (req, res) => {
+  const { email, password } = req.body;
+  const body = new User({ email, password });
+  await body.save();
+  try {
+    res.status(200).send({
+      data: body,
+    });
+  } catch (error) {
+    res.status(400).send({
+      message: error,
+    });
+    console.log(error);
+  }
+});
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.find({ email: email, password: password });
+
+  try {
+    if (user) {
+      res.status(200).send({
+        message: "Login Successful",
+        data: user,
+      });
+    } else {
+      res.status(404).send({
+        message: "User Not Found",
+      });
+    }
+  } catch (error) {
+    res.status(400).send({
+      message: error,
+    });
+    console.log(error);
+  }
+});
 app.listen(PORT, () => {
   connect();
   console.log(`Server Running at http://localhost:${PORT}`);
