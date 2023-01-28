@@ -11,6 +11,7 @@ export const Home = () => {
   const state = useSelector((state) => state);
   const { users, loading, error } = state;
   const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
   const { decodedToken } = useJwt(token);
   useEffect(() => {
     getLoading();
@@ -23,10 +24,11 @@ export const Home = () => {
         getError();
       });
   }, []);
-  // console.log(token);
-  // console.log(decodedToken);
   const handleLogout = () => {
     googleLogout();
+    if (user) {
+      localStorage.removeItem("user");
+    }
     localStorage.removeItem("token");
     navigate("/");
   };
@@ -64,15 +66,19 @@ export const Home = () => {
             gap: " 10px",
           }}
         >
-          <h2>Hey, {decodedToken && decodedToken.name}</h2>
-          <img
-            width={"60px"}
-            src={decodedToken && decodedToken.picture}
-            alt="logo"
-            style={{
-              borderRadius: "50%",
-            }}
-          />
+          <h2>
+            Hey, {decodedToken ? decodedToken.name : user ? user.name : null}
+          </h2>
+          {decodedToken && (
+            <img
+              width={"60px"}
+              src={decodedToken.picture}
+              alt="logo"
+              style={{
+                borderRadius: "50%",
+              }}
+            />
+          )}
         </div>
         <div>
           <button
